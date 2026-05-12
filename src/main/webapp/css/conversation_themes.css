@@ -1,0 +1,1739 @@
+/* ============================================================
+   QUICKCHAT — conversation_themes.css  (Version Ultra Premium)
+   • Illustrations SVG sur la GAUCHE (ne chevauchent pas les messages)
+   • Animations fluides et réalistes pour chaque thème
+   • Compatible mode sombre/clair
+   ============================================================ */
+
+/* =========================================================
+   BASE COMMUNE
+   ========================================================= */
+.chat-area {
+	position: relative;
+	overflow: hidden;
+}
+
+/* Conteneur illustrations — TOUJOURS À GAUCHE */
+.qc-anim-container {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 220px; /* Zone gauche réservée aux décos */
+	height: calc(100% - 72px);
+	pointer-events: none;
+	z-index: 0;
+	overflow: hidden;
+}
+
+/* Les éléments qui "tombent" ou "remontent" peuvent traverser toute la largeur
+   mais leur point de départ est ancré à gauche */
+.qc-anim-container.full-width {
+	width: 100%;
+}
+
+/* Transition douce au changement de thème */
+.chat-area, .message.sent .message-bubble, .message.received .message-bubble
+	{
+	transition: background 0.4s ease, background-color 0.4s ease;
+}
+
+/* =========================================================
+   THÈME : DEFAULT — Violet élégant
+   ========================================================= */
+.theme-default .chat-area {
+	background: linear-gradient(160deg, #f5f3ff 0%, #ede9fe 60%, #ddd6fe 100%);
+}
+
+.theme-default .message.sent .message-bubble {
+	background: linear-gradient(135deg, #7c3aed 0%, #5b21b6 100%) !important;
+	box-shadow: 0 4px 14px rgba(124, 58, 237, 0.35) !important;
+}
+
+.theme-default .message.sent .message-bubble::after {
+	border-color: transparent transparent transparent #5b21b6 !important;
+}
+
+/* =========================================================
+   THÈME : OCEAN — Vagues & fonds marins
+   ========================================================= */
+.theme-ocean .chat-area {
+	background: linear-gradient(180deg, #e0f7ff 0%, #bae6fd 50%, #7dd3fc 100%);
+}
+
+/* Vagues CSS animées en bas */
+.theme-ocean .chat-area::before {
+	content: '';
+	position: absolute;
+	bottom: 72px;
+	left: 0;
+	right: 0;
+	height: 120px;
+	background: radial-gradient(ellipse 60% 30% at 20% 100%, rgba(14, 165, 233, 0.18)
+		0%, transparent 70%),
+		url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 80'%3E%3Cpath fill='rgba(14,165,233,0.2)' d='M0,40 C100,0 200,80 400,40 C600,0 700,80 800,40 L800,80 L0,80Z'/%3E%3C/svg%3E")
+		repeat-x bottom/400px;
+	animation: oceanWave1 7s linear infinite;
+	pointer-events: none;
+	z-index: 0;
+}
+
+.theme-ocean .chat-area::after {
+	content: '';
+	position: absolute;
+	bottom: 72px;
+	left: 0;
+	right: 0;
+	height: 80px;
+	background:
+		url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 60'%3E%3Cpath fill='rgba(2,132,199,0.15)' d='M0,30 C150,60 250,0 400,30 C550,60 650,0 800,30 L800,60 L0,60Z'/%3E%3C/svg%3E")
+		repeat-x bottom/500px;
+	animation: oceanWave2 11s linear infinite reverse;
+	pointer-events: none;
+	z-index: 0;
+}
+
+@
+keyframes oceanWave1 {from { background-position-x:0;
+	
+}
+
+to {
+	background-position-x: 400px;
+}
+
+}
+@
+keyframes oceanWave2 {from { background-position-x:0;
+	
+}
+
+to {
+	background-position-x: 500px;
+}
+
+}
+.theme-ocean .message.sent .message-bubble {
+	background: linear-gradient(135deg, #0ea5e9 0%, #0369a1 100%) !important;
+	box-shadow: 0 4px 16px rgba(14, 165, 233, 0.4) !important;
+}
+
+.theme-ocean .message.received .message-bubble {
+	background: rgba(255, 255, 255, 0.88) !important;
+	border: 1px solid rgba(14, 165, 233, 0.25) !important;
+	backdrop-filter: blur(6px);
+}
+
+.theme-ocean .message.sent .message-bubble::after {
+	border-color: transparent transparent transparent #0369a1 !important;
+}
+
+/* Illustration : fond marin gauche */
+.theme-ocean .qc-anim-container::before {
+	content: '';
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 200px;
+	height: 300px;
+	background: /* Corail gauche */
+		url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 120'%3E%3Cg fill='%230ea5e9' opacity='0.18'%3E%3Crect x='35' y='80' width='10' height='40' rx='5'/%3E%3Cellipse cx='28' cy='70' rx='14' ry='8'/%3E%3Cellipse cx='52' cy='65' rx='12' ry='7'/%3E%3Cellipse cx='40' cy='58' rx='10' ry='6'/%3E%3C/g%3E%3C/svg%3E")
+		no-repeat left bottom/ 80px;
+	pointer-events: none;
+}
+
+/* Bulles animées générées par JS */
+.ocean-bubble {
+	position: absolute;
+	border-radius: 50%;
+	background: rgba(255, 255, 255, 0.35);
+	border: 1px solid rgba(255, 255, 255, 0.6);
+	animation: bubbleRise linear forwards;
+	pointer-events: none;
+}
+
+@
+keyframes bubbleRise { 0% {
+	transform: translateY(0) scale(1);
+	opacity: 0;
+}
+
+10
+%
+{
+opacity
+:
+0.8;
+}
+90
+%
+{
+opacity
+:
+0.6;
+}
+100
+%
+{
+transform
+:
+translateY(
+-500px
+)
+scale(
+0.5
+);
+opacity
+:
+0;
+}
+}
+
+/* Poisson animé */
+.ocean-fish {
+	position: absolute;
+	font-size: 22px;
+	animation: fishSwim linear forwards;
+	pointer-events: none;
+	filter: drop-shadow(0 2px 4px rgba(0, 80, 120, 0.2));
+}
+
+@
+keyframes fishSwim { 0% {
+	transform: translateX(-60px) translateY(0);
+	opacity: 0;
+}
+
+5
+%
+{
+opacity
+:
+1;
+}
+95
+%
+{
+opacity
+:
+1;
+}
+100
+%
+{
+transform
+:
+translateX(
+250px
+)
+translateY(
+-30px
+);
+opacity
+:
+0;
+}
+}
+
+/* =========================================================
+   THÈME : ROSE — Amour & Cœurs
+   ========================================================= */
+.theme-rose .chat-area {
+	background: linear-gradient(160deg, #fff1f2 0%, #ffe4e6 50%, #fecdd3 100%);
+}
+
+/* Décoration gauche : roses SVG */
+.theme-rose .chat-area::before {
+	content: '';
+	position: absolute;
+	bottom: 72px;
+	left: 0;
+	width: 180px;
+	height: 350px;
+	background:
+		url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 200'%3E%3Cg opacity='0.12'%3E%3C!-- Tige --%3E%3Crect x='48' y='100' width='4' height='100' rx='2' fill='%2316a34a'/%3E%3C!-- Feuilles --%3E%3Cellipse cx='35' cy='140' rx='16' ry='8' fill='%2316a34a' transform='rotate(-30 35 140)'/%3E%3Cellipse cx='65' cy='160' rx='16' ry='8' fill='%2316a34a' transform='rotate(30 65 160)'/%3E%3C!-- Rose --%3E%3Ccircle cx='50' cy='80' r='22' fill='%23f43f5e'/%3E%3Ccircle cx='50' cy='80' r='16' fill='%23e11d48'/%3E%3Ccircle cx='50' cy='80' r='10' fill='%23be123c'/%3E%3Ccircle cx='50' cy='80' r='5'  fill='%239f1239'/%3E%3C!-- Petales --%3E%3Cellipse cx='50' cy='58' rx='10' ry='14' fill='%23f43f5e' opacity='0.7'/%3E%3Cellipse cx='50' cy='102' rx='10' ry='14' fill='%23f43f5e' opacity='0.7'/%3E%3Cellipse cx='28' cy='80' rx='14' ry='10' fill='%23f43f5e' opacity='0.7'/%3E%3Cellipse cx='72' cy='80' rx='14' ry='10' fill='%23f43f5e' opacity='0.7'/%3E%3C/g%3E%3C/svg%3E")
+		no-repeat left bottom/100px,
+		url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 120'%3E%3Cg opacity='0.08'%3E%3Crect x='27' y='60' width='4' height='60' rx='2' fill='%2316a34a'/%3E%3Cellipse cx='20' cy='80' rx='12' ry='6' fill='%2316a34a' transform='rotate(-25 20 80)'/%3E%3Ccircle cx='29' cy='48' r='14' fill='%23fb7185'/%3E%3Ccircle cx='29' cy='48' r='9'  fill='%23f43f5e'/%3E%3Ccircle cx='29' cy='48' r='5'  fill='%23be123c'/%3E%3C/g%3E%3C/svg%3E")
+		no-repeat 60px bottom/60px;
+	pointer-events: none;
+}
+
+.theme-rose .message.sent .message-bubble {
+	background: linear-gradient(135deg, #f43f5e 0%, #be123c 100%) !important;
+	box-shadow: 0 4px 16px rgba(244, 63, 94, 0.4) !important;
+}
+
+.theme-rose .message.received .message-bubble {
+	background: rgba(255, 255, 255, 0.9) !important;
+	border: 1px solid rgba(244, 63, 94, 0.2) !important;
+}
+
+.theme-rose .message.sent .message-bubble::after {
+	border-color: transparent transparent transparent #be123c !important;
+}
+
+/* Cœurs flottants */
+.rose-heart {
+	position: absolute;
+	pointer-events: none;
+	animation: roseHeartFloat ease-out forwards;
+	filter: drop-shadow(0 0 6px rgba(244, 63, 94, 0.4));
+}
+
+@
+keyframes roseHeartFloat { 0% {
+	transform: translateY(0) rotate(0deg) scale(0.4);
+	opacity: 0;
+}
+
+15
+%
+{
+opacity
+:
+1;
+scale
+:
+1;
+}
+50
+%
+{
+transform
+:
+translateY(
+-200px
+)
+rotate(
+15deg
+)
+scale(
+1.1
+);
+}
+85
+%
+{
+opacity
+:
+0.7;
+}
+100
+%
+{
+transform
+:
+translateY(
+-420px
+)
+rotate(
+-10deg
+)
+scale(
+0.7
+);
+opacity
+:
+0;
+}
+}
+
+/* =========================================================
+   THÈME : FOREST — Forêt enchantée
+   ========================================================= */
+.theme-forest .chat-area {
+	background: linear-gradient(180deg, #f0fdf4 0%, #dcfce7 40%, #bbf7d0 100%);
+}
+
+/* Forêt SVG sur la gauche */
+.theme-forest .chat-area::before {
+	content: '';
+	position: absolute;
+	bottom: 72px;
+	left: 0;
+	width: 210px;
+	height: 100%;
+	background: /* Arbres grands */
+		url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 300'%3E%3Cg opacity='0.13'%3E%3C!-- Tronc 1 --%3E%3Crect x='20' y='200' width='12' height='100' rx='4' fill='%2392400e'/%3E%3C!-- Arbre 1 --%3E%3Cpolygon points='26,60 0,200 52,200' fill='%2315803d'/%3E%3Cpolygon points='26,30 2,140 50,140' fill='%2316a34a'/%3E%3Cpolygon points='26,5 6,90 46,90' fill='%2322c55e'/%3E%3C!-- Tronc 2 --%3E%3Crect x='80' y='220' width='10' height='80' rx='3' fill='%2392400e'/%3E%3C!-- Arbre 2 --%3E%3Cpolygon points='85,90 62,220 108,220' fill='%2315803d'/%3E%3Cpolygon points='85,65 65,155 105,155' fill='%2316a34a'/%3E%3Cpolygon points='85,45 68,110 102,110' fill='%2322c55e'/%3E%3C/g%3E%3C!-- Herbe --%3E%3Cg fill='%2316a34a' opacity='0.15'%3E%3Cellipse cx='60' cy='300' rx='60' ry='12'/%3E%3C/g%3E%3C/svg%3E")
+		no-repeat left bottom/ 120px, /* Buissons bas */
+        
+		url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 60'%3E%3Cg fill='%2316a34a' opacity='0.12'%3E%3Ccircle cx='20' cy='45' r='20'/%3E%3Ccircle cx='45' cy='40' r='25'/%3E%3Ccircle cx='80' cy='42' r='22'/%3E%3Ccircle cx='110' cy='44' r='18'/%3E%3Ccircle cx='140' cy='41' r='24'/%3E%3Ccircle cx='165' cy='46' r='18'/%3E%3C/g%3E%3C/svg%3E")
+		no-repeat left bottom/ 180px;
+	pointer-events: none;
+}
+
+.theme-forest .message.sent .message-bubble {
+	background: linear-gradient(135deg, #22c55e 0%, #15803d 100%) !important;
+	box-shadow: 0 4px 16px rgba(34, 197, 94, 0.35) !important;
+}
+
+.theme-forest .message.received .message-bubble {
+	background: rgba(255, 255, 255, 0.88) !important;
+	border: 1px solid rgba(34, 197, 94, 0.2) !important;
+}
+
+.theme-forest .message.sent .message-bubble::after {
+	border-color: transparent transparent transparent #15803d !important;
+}
+
+/* Feuilles tombantes */
+.forest-leaf {
+	position: absolute;
+	pointer-events: none;
+	animation: leafFall linear forwards;
+	opacity: 0.7;
+}
+
+@
+keyframes leafFall { 0% {
+	transform: translateY(-40px) rotate(0deg) translateX(0);
+	opacity: 0;
+}
+
+8
+%
+{
+opacity
+:
+0.75;
+}
+40
+%
+{
+transform
+:
+translateY(
+35vh
+)
+rotate(
+200deg
+)
+translateX(
+18px
+);
+}
+70
+%
+{
+transform
+:
+translateY(
+65vh
+)
+rotate(
+310deg
+)
+translateX(
+-12px
+);
+}
+92
+%
+{
+opacity
+:
+0.6;
+}
+100
+%
+{
+transform
+:
+translateY(
+96vh
+)
+rotate(
+380deg
+)
+translateX(
+8px
+);
+opacity
+:
+0;
+}
+}
+
+/* Lucioles */
+.forest-firefly {
+	position: absolute;
+	width: 5px;
+	height: 5px;
+	border-radius: 50%;
+	background: #a3e635;
+	box-shadow: 0 0 8px 3px rgba(163, 230, 53, 0.6);
+	pointer-events: none;
+	animation: fireflyFloat ease-in-out infinite;
+}
+
+@
+keyframes fireflyFloat { 0%,100% {
+	transform: translate(0, 0);
+	opacity: 0.2;
+}
+
+25
+%
+{
+transform
+:
+translate(
+12px
+,
+-8px
+);
+opacity
+:
+1;
+}
+50
+%
+{
+transform
+:
+translate(
+-6px
+,
+-16px
+);
+opacity
+:
+0.5;
+}
+75
+%
+{
+transform
+:
+translate(
+8px
+,
+-6px
+);
+opacity
+:
+0.9;
+}
+}
+
+/* =========================================================
+   THÈME : MIDNIGHT — Nuit étoilée
+   ========================================================= */
+.theme-midnight .chat-area {
+	background: linear-gradient(180deg, #0f172a 0%, #1e293b 55%, #0c4a6e 100%);
+}
+
+/* Lune SVG gauche */
+.theme-midnight .chat-area::before {
+	content: '';
+	position: absolute;
+	top: 20px;
+	left: 10px;
+	width: 180px;
+	height: 200px;
+	background:
+		url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120'%3E%3Cdefs%3E%3CradialGradient id='moonGrad' cx='45%25' cy='45%25' r='50%25'%3E%3Cstop offset='0%25' stop-color='%23fef3c7'/%3E%3Cstop offset='100%25' stop-color='%23fbbf24'/%3E%3C/radialGradient%3E%3C/defs%3E%3Ccircle cx='60' cy='60' r='38' fill='url(%23moonGrad)' opacity='0.22'/%3E%3Ccircle cx='74' cy='50' r='38' fill='%230f172a' opacity='0.5'/%3E%3C!-- Cratères --%3E%3Ccircle cx='45' cy='65' r='5' fill='%23fbbf24' opacity='0.08'/%3E%3Ccircle cx='58' cy='50' r='3' fill='%23fbbf24' opacity='0.06'/%3E%3Ccircle cx='40' cy='48' r='4' fill='%23fbbf24' opacity='0.07'/%3E%3C/svg%3E")
+		no-repeat left top/100px;
+	pointer-events: none;
+	animation: moonPulse 6s ease-in-out infinite;
+}
+
+@
+keyframes moonPulse { 0%,100% {
+	filter: drop-shadow(0 0 8px rgba(251, 191, 36, 0.1));
+}
+
+50
+%
+{
+filter
+:
+drop-shadow(
+0
+0
+24px
+rgba(
+251
+,
+191
+,
+36
+,
+0.3
+)
+);
+}
+}
+
+/* Collines nocturnes bas-gauche */
+.theme-midnight .chat-area::after {
+	content: '';
+	position: absolute;
+	bottom: 72px;
+	left: 0;
+	width: 220px;
+	height: 180px;
+	background:
+		url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 220 180'%3E%3Cellipse cx='70'  cy='180' rx='90'  ry='70' fill='%231e3a5f' opacity='0.35'/%3E%3Cellipse cx='160' cy='180' rx='80'  ry='55' fill='%231e3a5f' opacity='0.25'/%3E%3Cellipse cx='20'  cy='180' rx='50'  ry='40' fill='%230f2744' opacity='0.4'/%3E%3C/svg%3E")
+		no-repeat left bottom/220px;
+	pointer-events: none;
+}
+
+.theme-midnight .message.sent .message-bubble {
+	background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%) !important;
+	box-shadow: 0 4px 18px rgba(59, 130, 246, 0.4) !important;
+}
+
+.theme-midnight .message.received .message-bubble {
+	background: rgba(255, 255, 255, 0.1) !important;
+	border: 1px solid rgba(59, 130, 246, 0.25) !important;
+	color: #e2e8f0 !important;
+	backdrop-filter: blur(8px);
+}
+
+.theme-midnight .message.sent .message-bubble::after {
+	border-color: transparent transparent transparent #1e40af !important;
+}
+
+/* Étoiles */
+.midnight-star {
+	position: absolute;
+	border-radius: 50%;
+	background: white;
+	pointer-events: none;
+	animation: starTwinkle ease-in-out infinite;
+}
+
+@
+keyframes starTwinkle { 0%,100% {
+	opacity: 0.2;
+	transform: scale(1);
+}
+
+50
+%
+{
+opacity
+:
+1;
+transform
+:
+scale(
+1.4
+);
+box-shadow
+:
+0
+0
+6px
+rgba(
+255
+,
+255
+,
+255
+,
+0.8
+);
+}
+}
+
+/* Étoile filante */
+.shooting-star {
+	position: absolute;
+	height: 2px;
+	background: linear-gradient(90deg, rgba(255, 255, 255, 0), white);
+	border-radius: 2px;
+	pointer-events: none;
+	animation: shootStar 2.5s ease-in forwards;
+	transform-origin: left center;
+}
+
+@
+keyframes shootStar { 0% {
+	width: 0;
+	opacity: 0;
+}
+
+10
+%
+{
+opacity
+:
+1;
+}
+40
+%
+{
+width
+:
+120px;
+opacity
+:
+1;
+}
+100
+%
+{
+width
+:
+180px;
+opacity
+:
+0;
+transform
+:
+translateX(
+250px
+)
+translateY(
+80px
+);
+}
+}
+
+/* =========================================================
+   THÈME : SUNSET — Coucher de soleil
+   ========================================================= */
+.theme-sunset .chat-area {
+	background: linear-gradient(180deg, #fef3c7 0%, #fed7aa 30%, #fca5a1 60%, #f97316
+		100%);
+}
+
+/* Soleil + silhouette paysage gauche */
+.theme-sunset .chat-area::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 210px;
+	height: 100%;
+	background: /* Soleil */
+		url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3CradialGradient id='sg' cx='50%25' cy='50%25' r='50%25'%3E%3Cstop offset='0%25' stop-color='%23fef08a'/%3E%3Cstop offset='60%25' stop-color='%23fbbf24'/%3E%3Cstop offset='100%25' stop-color='%23f97316' stop-opacity='0'/%3E%3C/radialGradient%3E%3C/defs%3E%3Ccircle cx='50' cy='50' r='48' fill='url(%23sg)' opacity='0.25'/%3E%3Ccircle cx='50' cy='50' r='28' fill='%23fbbf24' opacity='0.18'/%3E%3C/svg%3E")
+		no-repeat 20px 30px/ 120px, /* Silhouette palmiers */
+        
+		url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 140 280'%3E%3Cg opacity='0.13' fill='%2392400e'%3E%3C!-- Tronc courbé 1 --%3E%3Cpath d='M30,280 Q40,200 55,150 Q65,110 50,80' stroke='%2392400e' stroke-width='8' fill='none' opacity='0.18'/%3E%3C!-- Feuilles 1 --%3E%3Cellipse cx='50' cy='75' rx='35' ry='10' fill='%2315803d' opacity='0.2' transform='rotate(-20 50 75)'/%3E%3Cellipse cx='50' cy='70' rx='30' ry='8'  fill='%2316a34a' opacity='0.2' transform='rotate(15 50 70)'/%3E%3Cellipse cx='50' cy='80' rx='28' ry='7'  fill='%2315803d' opacity='0.15' transform='rotate(-40 50 80)'/%3E%3Cellipse cx='50' cy='72' rx='25' ry='7'  fill='%2316a34a' opacity='0.15' transform='rotate(50 50 72)'/%3E%3C!-- Tronc 2 --%3E%3Cpath d='M110,280 Q100,210 90,160 Q80,120 95,90' stroke='%2392400e' stroke-width='7' fill='none' opacity='0.12'/%3E%3Cellipse cx='95' cy='85' rx='28' ry='8' fill='%2315803d' opacity='0.15' transform='rotate(-15 95 85)'/%3E%3Cellipse cx='95' cy='80' rx='24' ry='7' fill='%2316a34a' opacity='0.15' transform='rotate(25 95 80)'/%3E%3C/g%3E%3C/svg%3E")
+		no-repeat left bottom/ 140px;
+	pointer-events: none;
+	animation: sunsetGlow 5s ease-in-out infinite;
+}
+
+@
+keyframes sunsetGlow { 0%,100% {
+	filter: brightness(1);
+}
+
+50
+%
+{
+filter
+:
+brightness(
+1.12
+)
+saturate(
+1.1
+);
+}
+}
+
+/* Nuages animés */
+.sunset-cloud {
+	position: absolute;
+	border-radius: 100px;
+	background: rgba(255, 255, 245, 0.55);
+	filter: blur(14px);
+	pointer-events: none;
+	animation: cloudDrift linear infinite;
+}
+
+@
+keyframes cloudDrift {from { transform:translateX(-200px);
+	
+}
+
+to {
+	transform: translateX(110vw);
+}
+
+}
+.theme-sunset .message.sent .message-bubble {
+	background: linear-gradient(135deg, #f97316 0%, #dc2626 100%) !important;
+	box-shadow: 0 4px 16px rgba(249, 115, 22, 0.4) !important;
+}
+
+.theme-sunset .message.received .message-bubble {
+	background: rgba(255, 255, 255, 0.85) !important;
+	border: 1px solid rgba(249, 115, 22, 0.2) !important;
+}
+
+.theme-sunset .message.sent .message-bubble::after {
+	border-color: transparent transparent transparent #dc2626 !important;
+}
+
+/* =========================================================
+   THÈME : AURORA — Aurore boréale
+   ========================================================= */
+.theme-aurora .chat-area {
+	background: linear-gradient(180deg, #030712 0%, #0f172a 40%, #1e1b4b 100%);
+}
+
+/* Drapés d'aurore */
+.theme-aurora .chat-area::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	height: 55%;
+	background: linear-gradient(180deg, rgba(6, 182, 212, 0.0) 0%,
+		rgba(6, 182, 212, 0.18) 20%, rgba(139, 92, 246, 0.22) 40%,
+		rgba(236, 72, 153, 0.18) 60%, rgba(139, 92, 246, 0.12) 80%,
+		transparent 100%);
+	filter: blur(18px);
+	animation: auroraWave 12s ease-in-out infinite alternate;
+	pointer-events: none;
+}
+
+@
+keyframes auroraWave { 0% {
+	transform: skewX(0deg) scaleX(1) translateX(0%);
+	opacity: 0.6;
+}
+
+33
+%
+{
+transform
+:
+skewX(
+3deg
+)
+scaleX(
+1.05
+)
+translateX(
+2%
+);
+opacity
+:
+1;
+}
+66
+%
+{
+transform
+:
+skewX(
+-2deg
+)
+scaleX(
+0.97
+)
+translateX(
+-2%
+);
+opacity
+:
+0.75;
+}
+100
+%
+{
+transform
+:
+skewX(
+1deg
+)
+scaleX(
+1.03
+)
+translateX(
+1%
+);
+opacity
+:
+0.85;
+}
+}
+
+/* Second ruban */
+.theme-aurora .chat-area::after {
+	content: '';
+	position: absolute;
+	top: 10%;
+	left: -10%;
+	right: -10%;
+	height: 40%;
+	background: linear-gradient(180deg, transparent 0%, rgba(16, 185, 129, 0.14)
+		30%, rgba(99, 102, 241, 0.18) 60%, transparent 100%);
+	filter: blur(24px);
+	animation: auroraWave2 16s ease-in-out infinite alternate-reverse;
+	pointer-events: none;
+}
+
+@
+keyframes auroraWave2 { 0% {
+	transform: skewX(-3deg) translateX(0%) scaleY(1);
+	opacity: 0.5;
+}
+
+50
+%
+{
+transform
+:
+skewX(
+4deg
+)
+translateX(
+-3%
+)
+scaleY(
+1.08
+);
+opacity
+:
+0.9;
+}
+100
+%
+{
+transform
+:
+skewX(
+-1deg
+)
+translateX(
+2%
+)
+scaleY(
+0.95
+);
+opacity
+:
+0.6;
+}
+}
+
+/* Silhouette paysage arctique gauche */
+.theme-aurora-decor {
+	position: absolute;
+	bottom: 72px;
+	left: 0;
+	width: 200px;
+	height: 180px;
+	pointer-events: none;
+	background:
+		url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 180'%3E%3C!-- Montagnes --%3E%3Cpolygon points='0,180 60,60 120,180'  fill='%230f172a' opacity='0.7'/%3E%3Cpolygon points='40,180 110,40 180,180' fill='%230f1f3d' opacity='0.6'/%3E%3Cpolygon points='100,180 160,80 200,180' fill='%230a1628' opacity='0.75'/%3E%3C!-- Neige --%3E%3Cpolygon points='60,60 50,75 70,75'  fill='white' opacity='0.12'/%3E%3Cpolygon points='110,40 98,58 122,58' fill='white' opacity='0.1'/%3E%3Cpolygon points='160,80 150,95 170,95' fill='white' opacity='0.1'/%3E%3C!-- Sapins --%3E%3Cg fill='%23134e4a' opacity='0.25'%3E%3Cpolygon points='15,180 22,150 29,180'/%3E%3Cpolygon points='22,160 29,132 36,160'/%3E%3Cpolygon points='25,140 32,115 39,140'/%3E%3Cpolygon points='140,180 147,155 154,180'/%3E%3Cpolygon points='147,162 154,136 161,162'/%3E%3C/g%3E%3C/svg%3E")
+		no-repeat left bottom/200px;
+}
+
+.theme-aurora .message.sent .message-bubble {
+	background: linear-gradient(135deg, #06b6d4, #8b5cf6, #ec4899)
+		!important;
+	box-shadow: 0 4px 20px rgba(139, 92, 246, 0.45) !important;
+}
+
+.theme-aurora .message.received .message-bubble {
+	background: rgba(255, 255, 255, 0.1) !important;
+	border: 1px solid rgba(99, 102, 241, 0.3) !important;
+	color: #e2e8f0 !important;
+	backdrop-filter: blur(10px);
+}
+
+.theme-aurora .message.sent .message-bubble::after {
+	border-color: transparent transparent transparent #7c3aed !important;
+}
+
+/* Étoiles */
+.aurora-star {
+	position: absolute;
+	border-radius: 50%;
+	background: white;
+	pointer-events: none;
+	animation: starTwinkle ease-in-out infinite;
+}
+
+/* =========================================================
+   THÈME : CHERRY — Cerisier japonais
+   ========================================================= */
+.theme-cherry .chat-area {
+	background: linear-gradient(160deg, #fdf2f8 0%, #fce7f3 50%, #fbcfe8 100%);
+}
+
+/* Branches de cerisier gauche */
+.theme-cherry .chat-area::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 200px;
+	height: 320px;
+	background:
+		url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 160 300'%3E%3Cg stroke='%23be185d' stroke-width='3' fill='none' opacity='0.14' stroke-linecap='round'%3E%3C!-- Tronc --%3E%3Cpath d='M30,300 Q35,250 30,200 Q25,150 40,100'/%3E%3C!-- Grosses branches --%3E%3Cpath d='M38,180 Q70,160 100,140'/%3E%3Cpath d='M33,220 Q20,200 10,180'/%3E%3Cpath d='M38,150 Q60,120 80,100'/%3E%3Cpath d='M40,120 Q70,90 100,70'/%3E%3C!-- Petites branches --%3E%3Cpath d='M80,100 Q90,80 110,70' stroke-width='2'/%3E%3Cpath d='M100,140 Q115,120 130,110' stroke-width='2'/%3E%3Cpath d='M80,100 Q85,75 90,55' stroke-width='2'/%3E%3Cpath d='M60,120 Q55,95 50,75' stroke-width='2'/%3E%3C/g%3E%3C!-- Fleurs roses --%3E%3Cg opacity='0.18'%3E%3Ccircle cx='110' cy='65'  r='8'  fill='%23f9a8d4'/%3E%3Ccircle cx='100' cy='55'  r='6'  fill='%23fbcfe8'/%3E%3Ccircle cx='92'  cy='50'  r='5'  fill='%23f472b6'/%3E%3Ccircle cx='130' cy='108' r='7'  fill='%23f9a8d4'/%3E%3Ccircle cx='118' cy='100' r='5'  fill='%23fbcfe8'/%3E%3Ccircle cx='100' cy='135' r='8'  fill='%23f9a8d4'/%3E%3Ccircle cx='115' cy='128' r='5'  fill='%23f472b6'/%3E%3Ccircle cx='90'  cy='52'  r='6'  fill='%23fbcfe8'/%3E%3Ccircle cx='50'  cy='72'  r='7'  fill='%23f9a8d4'/%3E%3Ccircle cx='55'  cy='60'  r='5'  fill='%23fbcfe8'/%3E%3Ccircle cx='65'  cy='78'  r='6'  fill='%23f472b6'/%3E%3C/g%3E%3C/svg%3E")
+		no-repeat left top/160px;
+	pointer-events: none;
+}
+
+.theme-cherry .message.sent .message-bubble {
+	background: linear-gradient(135deg, #f472b6 0%, #db2777 100%) !important;
+	box-shadow: 0 4px 16px rgba(244, 114, 182, 0.4) !important;
+}
+
+.theme-cherry .message.received .message-bubble {
+	background: rgba(255, 255, 255, 0.88) !important;
+	border: 1px solid rgba(244, 114, 182, 0.2) !important;
+}
+
+.theme-cherry .message.sent .message-bubble::after {
+	border-color: transparent transparent transparent #db2777 !important;
+}
+
+/* Pétales tombants */
+.cherry-petal {
+	position: absolute;
+	pointer-events: none;
+	animation: petalFall linear forwards;
+	filter: drop-shadow(0 2px 3px rgba(236, 72, 153, 0.25));
+}
+
+@
+keyframes petalFall { 0% {
+	transform: translateY(-30px) rotate(0deg) translateX(0);
+	opacity: 0;
+}
+
+8
+%
+{
+opacity
+:
+0.85;
+}
+35
+%
+{
+transform
+:
+translateY(
+28vh
+)
+rotate(
+140deg
+)
+translateX(
+22px
+);
+}
+65
+%
+{
+transform
+:
+translateY(
+58vh
+)
+rotate(
+260deg
+)
+translateX(
+-15px
+);
+}
+90
+%
+{
+opacity
+:
+0.7;
+}
+100
+%
+{
+transform
+:
+translateY(
+92vh
+)
+rotate(
+360deg
+)
+translateX(
+10px
+);
+opacity
+:
+0;
+}
+}
+
+/* =========================================================
+   THÈME : COSMIC — Galaxie & Espace
+   ========================================================= */
+.theme-cosmic .chat-area {
+	background: radial-gradient(ellipse at 30% 20%, #1e0a3c 0%, #0f0f23 40%, #000510
+		100%);
+}
+
+/* Nébuleuse gauche */
+.theme-cosmic .chat-area::before {
+	content: '';
+	position: absolute;
+	top: 5%;
+	left: 0;
+	width: 220px;
+	height: 60%;
+	background: radial-gradient(ellipse 120px 200px at 60px 150px, rgba(168, 85, 247,
+		0.18) 0%, transparent 70%),
+		radial-gradient(ellipse 80px 140px at 100px 250px, rgba(59, 130, 246,
+		0.14) 0%, transparent 70%),
+		radial-gradient(ellipse 100px 120px at 40px 300px, rgba(236, 72, 153,
+		0.12) 0%, transparent 70%);
+	filter: blur(8px);
+	pointer-events: none;
+	animation: nebulaBreath 10s ease-in-out infinite alternate;
+}
+
+@
+keyframes nebulaBreath { 0% {
+	opacity: 0.6;
+	filter: blur(8px);
+}
+
+100
+%
+{
+opacity
+:
+1;
+filter
+:
+blur(
+12px
+);
+}
+}
+
+/* Planète gauche */
+.theme-cosmic .chat-area::after {
+	content: '';
+	position: absolute;
+	bottom: 120px;
+	left: 20px;
+	width: 80px;
+	height: 80px;
+	border-radius: 50%;
+	background: radial-gradient(circle at 35% 35%, #7c3aed, #1e0a3c);
+	box-shadow: 0 0 0 6px rgba(139, 92, 246, 0.08), 0 0 0 14px
+		rgba(139, 92, 246, 0.05), 0 0 24px rgba(139, 92, 246, 0.2);
+	pointer-events: none;
+	animation: planetOrbit 20s linear infinite;
+}
+
+@
+keyframes planetOrbit { 0%,100% {
+	transform: translateY(0) scale(1);
+}
+
+50
+%
+{
+transform
+:
+translateY(
+-12px
+)
+scale(
+1.04
+);
+}
+}
+.theme-cosmic .message.sent .message-bubble {
+	background: linear-gradient(135deg, #a855f7 0%, #4f46e5 100%) !important;
+	box-shadow: 0 4px 20px rgba(168, 85, 247, 0.45) !important;
+}
+
+.theme-cosmic .message.received .message-bubble {
+	background: rgba(255, 255, 255, 0.08) !important;
+	border: 1px solid rgba(168, 85, 247, 0.25) !important;
+	color: #e2e8f0 !important;
+	backdrop-filter: blur(10px);
+}
+
+.theme-cosmic .message.sent .message-bubble::after {
+	border-color: transparent transparent transparent #4f46e5 !important;
+}
+
+/* Étoiles statiques */
+.cosmic-star {
+	position: absolute;
+	border-radius: 50%;
+	background: white;
+	pointer-events: none;
+	animation: starTwinkle ease-in-out infinite;
+}
+/* Étoile filante */
+.cosmic-shooting {
+	position: absolute;
+	height: 2px;
+	background: linear-gradient(90deg, transparent, white, rgba(255, 255, 255, 0.6));
+	border-radius: 2px;
+	pointer-events: none;
+	animation: shootStar ease-in forwards;
+}
+
+@
+keyframes shootStar { 0% {
+	width: 0;
+	opacity: 0;
+	transform: translate(0, 0) rotate(-30deg);
+}
+
+10
+%
+{
+opacity
+:
+1;
+}
+60
+%
+{
+width
+:
+90px;
+opacity
+:
+0.9;
+}
+100
+%
+{
+width
+:
+140px;
+opacity
+:
+0;
+transform
+:
+translate(
+160px
+,
+90px
+)
+rotate(
+-30deg
+);
+}
+}
+
+/* =========================================================
+   THÈME : GOLDEN — Luxe doré
+   ========================================================= */
+.theme-golden .chat-area {
+	background: linear-gradient(160deg, #fffbeb 0%, #fef3c7 40%, #fde68a 100%);
+}
+
+/* Motif Art Déco gauche */
+.theme-golden .chat-area::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 200px;
+	height: 100%;
+	background:
+		url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 200'%3E%3Cg stroke='%23d97706' stroke-width='1' fill='none' opacity='0.1'%3E%3C!-- Lignes Art Déco --%3E%3Cline x1='10' y1='0'  x2='10' y2='200'/%3E%3Cline x1='20' y1='0'  x2='20' y2='200'/%3E%3Cline x1='30' y1='0'  x2='30' y2='200'/%3E%3C!-- Losanges --%3E%3Cpolygon points='40,20 55,40 40,60 25,40' stroke-width='1.5'/%3E%3Cpolygon points='40,80 55,100 40,120 25,100' stroke-width='1.5'/%3E%3Cpolygon points='40,140 55,160 40,180 25,160' stroke-width='1.5'/%3E%3C!-- Points déco --%3E%3Ccircle cx='40' cy='40'  r='3' fill='%23d97706'/%3E%3Ccircle cx='40' cy='100' r='3' fill='%23d97706'/%3E%3Ccircle cx='40' cy='160' r='3' fill='%23d97706'/%3E%3C/g%3E%3C/svg%3E")
+		repeat-y left/80px;
+	pointer-events: none;
+	opacity: 0.6;
+}
+
+.theme-golden .message.sent .message-bubble {
+	background: linear-gradient(135deg, #d97706 0%, #92400e 100%) !important;
+	box-shadow: 0 4px 16px rgba(217, 119, 6, 0.4) !important;
+}
+
+.theme-golden .message.received .message-bubble {
+	background: rgba(255, 255, 255, 0.88) !important;
+	border: 1px solid rgba(217, 119, 6, 0.2) !important;
+}
+
+.theme-golden .message.sent .message-bubble::after {
+	border-color: transparent transparent transparent #92400e !important;
+}
+
+/* Particules dorées */
+.golden-particle {
+	position: absolute;
+	border-radius: 50%;
+	background: radial-gradient(circle, #fde68a, #d97706);
+	pointer-events: none;
+	animation: goldRise ease-out forwards;
+	box-shadow: 0 0 6px rgba(251, 191, 36, 0.5);
+}
+
+@
+keyframes goldRise { 0% {
+	transform: translateY(0) scale(0) rotate(0deg);
+	opacity: 0;
+}
+
+15
+%
+{
+opacity
+:
+0.8;
+transform
+:
+scale(
+1
+);
+}
+80
+%
+{
+opacity
+:
+0.6;
+}
+100
+%
+{
+transform
+:
+translateY(
+-360px
+)
+scale(
+0.5
+)
+rotate(
+180deg
+);
+opacity
+:
+0;
+}
+}
+
+/* Paillettes */
+.golden-sparkle {
+	position: absolute;
+	pointer-events: none;
+	font-size: 14px;
+	animation: sparkleFloat ease-out forwards;
+}
+
+@
+keyframes sparkleFloat { 0% {
+	transform: translateY(0) scale(0) rotate(0deg);
+	opacity: 0;
+}
+
+20
+%
+{
+opacity
+:
+1;
+transform
+:
+scale(
+1.2
+)
+rotate(
+30deg
+);
+}
+70
+%
+{
+opacity
+:
+0.8;
+}
+100
+%
+{
+transform
+:
+translateY(
+-300px
+)
+scale(
+0
+)
+rotate(
+180deg
+);
+opacity
+:
+0;
+}
+}
+
+/* =========================================================
+   THÈME : BASKETBALL — Terrain de basket
+   ========================================================= */
+.theme-basketball .chat-area {
+	background: linear-gradient(180deg, #fff7ed 0%, #ffedd5 60%, #fed7aa 100%);
+}
+
+/* Terrain de basket SVG gauche */
+.theme-basketball .chat-area::before {
+	content: '';
+	position: absolute;
+	bottom: 72px;
+	left: 0;
+	width: 200px;
+	height: 100%;
+	background: /* Lignes de terrain */
+		url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 160 400'%3E%3Cg stroke='%23f97316' stroke-width='2' fill='none' opacity='0.12'%3E%3C!-- Lignes horizontales de terrain --%3E%3Cline x1='0' y1='50'  x2='160' y2='50'/%3E%3Cline x1='0' y1='150' x2='160' y2='150'/%3E%3Cline x1='0' y1='250' x2='160' y2='250'/%3E%3Cline x1='0' y1='350' x2='160' y2='350'/%3E%3C!-- Lignes verticales --%3E%3Cline x1='0'   y1='0' x2='0'   y2='400'/%3E%3Cline x1='80'  y1='0' x2='80'  y2='400'/%3E%3Cline x1='160' y1='0' x2='160' y2='400'/%3E%3C!-- Demi-cercle raquette bas --%3E%3Cpath d='M20,400 L20,310 Q80,270 140,310 L140,400' stroke-width='2'/%3E%3C!-- Cercle central --%3E%3Ccircle cx='80' cy='200' r='45' stroke-width='2'/%3E%3C!-- Demi-cercle raquette haut --%3E%3Cpath d='M20,0 L20,90 Q80,130 140,90 L140,0' stroke-width='2'/%3E%3C!-- Panneaux --%3E%3Crect x='55' y='0'   width='50' height='8'  rx='1' fill='%23f97316' opacity='0.15'/%3E%3Crect x='55' y='392' width='50' height='8'  rx='1' fill='%23f97316' opacity='0.15'/%3E%3C!-- Cercles raquette --%3E%3Csemicircle/%3E%3Cpath d='M55,50  Q80,80  105,50'  stroke-width='1.5'/%3E%3Cpath d='M55,350 Q80,320 105,350' stroke-width='1.5'/%3E%3C/g%3E%3C/svg%3E")
+		no-repeat left top/ 160px;
+	pointer-events: none;
+}
+
+/* Panier gauche */
+.theme-basketball .chat-area::after {
+	content: '';
+	position: absolute;
+	top: 30px;
+	left: 0;
+	width: 100px;
+	height: 80px;
+	background:
+		url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 80'%3E%3Cg fill='none' stroke='%23ea580c' stroke-width='2' opacity='0.18'%3E%3C!-- Poteau --%3E%3Crect x='5' y='0' width='5' height='80' rx='2' fill='%23ea580c' opacity='0.15'/%3E%3C!-- Bras horizontal --%3E%3Cline x1='10' y1='12' x2='55' y2='12'/%3E%3C!-- Panneau --%3E%3Crect x='42' y='0' width='40' height='28' rx='2'/%3E%3Crect x='52' y='8' width='20' height='14' rx='1' stroke-width='1.5'/%3E%3C!-- Anneau --%3E%3Cellipse cx='60' cy='35' rx='16' ry='5' stroke-width='2.5'/%3E%3C!-- Filet stylisé --%3E%3Cpath d='M44,35 L50,58 Q60,65 70,58 L76,35' stroke-width='1.5' stroke-dasharray='3,2'/%3E%3C/g%3E%3C/svg%3E")
+		no-repeat left top/100px;
+	pointer-events: none;
+}
+
+.theme-basketball .message.sent .message-bubble {
+	background: linear-gradient(135deg, #f97316 0%, #c2410c 100%) !important;
+	box-shadow: 0 4px 16px rgba(249, 115, 22, 0.4) !important;
+}
+
+.theme-basketball .message.received .message-bubble {
+	background: rgba(255, 255, 255, 0.9) !important;
+	border: 1px solid rgba(249, 115, 22, 0.2) !important;
+}
+
+.theme-basketball .message.sent .message-bubble::after {
+	border-color: transparent transparent transparent #c2410c !important;
+}
+
+/* Ballon rebondissant */
+.basketball-ball {
+	position: absolute;
+	pointer-events: none;
+	font-size: 28px;
+	animation: ballBounce ease-in-out infinite;
+	filter: drop-shadow(0 4px 3px rgba(0, 0, 0, 0.2));
+}
+
+@
+keyframes ballBounce { 0%,100% {
+	transform: translateY(0) scaleX(1) scaleY(1);
+}
+
+45
+%
+,
+55
+%
+{
+transform
+:
+translateY(
+-110px
+)
+scaleX(
+0.95
+)
+scaleY(
+1.05
+);
+}
+48
+%
+,
+52
+%
+{
+transform
+:
+translateY(
+-115px
+)
+scaleX(
+1
+)
+scaleY(
+1
+);
+}
+90
+%
+,
+10
+%
+{
+transform
+:
+translateY(
+2px
+)
+scaleX(
+1.08
+)
+scaleY(
+0.92
+);
+}
+}
+/* Ombre du ballon */
+.basketball-shadow {
+	position: absolute;
+	border-radius: 50%;
+	background: rgba(0, 0, 0, 0.12);
+	filter: blur(4px);
+	pointer-events: none;
+	animation: ballShadow ease-in-out infinite;
+}
+
+@
+keyframes ballShadow { 0%,100% {
+	transform: scaleX(1);
+	opacity: 0.4;
+}
+
+48
+%
+,
+52
+%
+{
+transform
+:
+scaleX(
+0.4
+);
+opacity
+:
+0.15;
+}
+}
+
+/* =========================================================
+   THÈME : OCEAN — Poissons & Bulles (animations JS)
+   ========================================================= */
+/* (déjà défini plus haut, les classes d'animation sont là) */
+
+/* =========================================================
+   ÉLÉMENTS COMMUNS — Badges & accents par thème
+   ========================================================= */
+.theme-ocean     .unread-badge {
+	background: linear-gradient(135deg, #0ea5e9, #0369a1) !important;
+}
+
+.theme-rose      .unread-badge {
+	background: linear-gradient(135deg, #f43f5e, #be123c) !important;
+}
+
+.theme-forest    .unread-badge {
+	background: linear-gradient(135deg, #22c55e, #15803d) !important;
+}
+
+.theme-midnight  .unread-badge {
+	background: linear-gradient(135deg, #3b82f6, #1e40af) !important;
+}
+
+.theme-sunset    .unread-badge {
+	background: linear-gradient(135deg, #f97316, #dc2626) !important;
+}
+
+.theme-aurora    .unread-badge {
+	background: linear-gradient(135deg, #06b6d4, #8b5cf6, #ec4899)
+		!important;
+}
+
+.theme-cherry    .unread-badge {
+	background: linear-gradient(135deg, #f472b6, #db2777) !important;
+}
+
+.theme-cosmic    .unread-badge {
+	background: linear-gradient(135deg, #a855f7, #4f46e5) !important;
+}
+
+.theme-golden    .unread-badge {
+	background: linear-gradient(135deg, #d97706, #92400e) !important;
+}
+
+.theme-basketball .unread-badge {
+	background: linear-gradient(135deg, #f97316, #c2410c) !important;
+}
+
+.theme-ocean      .contact-item.active {
+	border-left-color: #0ea5e9 !important;
+	background: rgba(14, 165, 233, 0.07) !important;
+}
+
+.theme-rose       .contact-item.active {
+	border-left-color: #f43f5e !important;
+	background: rgba(244, 63, 94, 0.07) !important;
+}
+
+.theme-forest     .contact-item.active {
+	border-left-color: #22c55e !important;
+	background: rgba(34, 197, 94, 0.07) !important;
+}
+
+.theme-midnight   .contact-item.active {
+	border-left-color: #3b82f6 !important;
+	background: rgba(59, 130, 246, 0.07) !important;
+}
+
+.theme-sunset     .contact-item.active {
+	border-left-color: #f97316 !important;
+	background: rgba(249, 115, 22, 0.07) !important;
+}
+
+.theme-aurora     .contact-item.active {
+	border-left-color: #8b5cf6 !important;
+	background: rgba(139, 92, 246, 0.07) !important;
+}
+
+.theme-cherry     .contact-item.active {
+	border-left-color: #f472b6 !important;
+	background: rgba(244, 114, 182, 0.07) !important;
+}
+
+.theme-cosmic     .contact-item.active {
+	border-left-color: #a855f7 !important;
+	background: rgba(168, 85, 247, 0.07) !important;
+}
+
+.theme-golden     .contact-item.active {
+	border-left-color: #d97706 !important;
+	background: rgba(217, 119, 6, 0.07) !important;
+}
+
+.theme-basketball .contact-item.active {
+	border-left-color: #f97316 !important;
+	background: rgba(249, 115, 22, 0.07) !important;
+}
+
+/* Bouton envoi par thème */
+.theme-ocean      .message-input-area button[type="submit"],
+	.theme-ocean      #sendButton {
+	background: linear-gradient(135deg, #0ea5e9, #0369a1) !important;
+}
+
+.theme-rose       .message-input-area button[type="submit"], .theme-rose       #sendButton
+	{
+	background: linear-gradient(135deg, #f43f5e, #be123c) !important;
+}
+
+.theme-forest     .message-input-area button[type="submit"],
+	.theme-forest     #sendButton {
+	background: linear-gradient(135deg, #22c55e, #15803d) !important;
+}
+
+.theme-midnight   .message-input-area button[type="submit"],
+	.theme-midnight   #sendButton {
+	background: linear-gradient(135deg, #3b82f6, #1e40af) !important;
+}
+
+.theme-sunset     .message-input-area button[type="submit"],
+	.theme-sunset     #sendButton {
+	background: linear-gradient(135deg, #f97316, #dc2626) !important;
+}
+
+.theme-aurora     .message-input-area button[type="submit"],
+	.theme-aurora     #sendButton {
+	background: linear-gradient(135deg, #06b6d4, #8b5cf6, #ec4899)
+		!important;
+}
+
+.theme-cherry     .message-input-area button[type="submit"],
+	.theme-cherry     #sendButton {
+	background: linear-gradient(135deg, #f472b6, #db2777) !important;
+}
+
+.theme-cosmic     .message-input-area button[type="submit"],
+	.theme-cosmic     #sendButton {
+	background: linear-gradient(135deg, #a855f7, #4f46e5) !important;
+}
+
+.theme-golden     .message-input-area button[type="submit"],
+	.theme-golden     #sendButton {
+	background: linear-gradient(135deg, #d97706, #92400e) !important;
+}
+
+.theme-basketball .message-input-area button[type="submit"],
+	.theme-basketball #sendButton {
+	background: linear-gradient(135deg, #f97316, #c2410c) !important;
+}
+
+/* Zone de saisie par thème */
+.theme-midnight .message-input-area, .theme-aurora   .message-input-area,
+	.theme-cosmic   .message-input-area {
+	background: rgba(15, 23, 42, 0.92) !important;
+	border-top-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+.theme-midnight .message-input-area input, .theme-aurora   .message-input-area input,
+	.theme-cosmic   .message-input-area input {
+	background: rgba(255, 255, 255, 0.08) !important;
+	border-color: rgba(255, 255, 255, 0.12) !important;
+	color: #e2e8f0 !important;
+}
+
+.theme-midnight .message-input-area input::placeholder, .theme-aurora   .message-input-area input::placeholder,
+	.theme-cosmic   .message-input-area input::placeholder {
+	color: rgba(255, 255, 255, 0.35) !important;
+}
+
+/* Mode sombre — adaptations thèmes clairs */
+body.dark .theme-ocean     .chat-area {
+	background: linear-gradient(180deg, #082f49 0%, #0c4a6e 60%, #075985 100%)
+		!important;
+}
+
+body.dark .theme-rose      .chat-area {
+	background: linear-gradient(160deg, #2d0a14 0%, #450a20 100%) !important;
+}
+
+body.dark .theme-forest    .chat-area {
+	background: linear-gradient(180deg, #052e16 0%, #14532d 100%) !important;
+}
+
+body.dark .theme-sunset    .chat-area {
+	background: linear-gradient(180deg, #1c0a00 0%, #431407 60%, #7c2d12 100%)
+		!important;
+}
+
+body.dark .theme-cherry    .chat-area {
+	background: linear-gradient(160deg, #2d0517 0%, #4a1028 100%) !important;
+}
+
+body.dark .theme-golden    .chat-area {
+	background: linear-gradient(160deg, #1c1004 0%, #292001 100%) !important;
+}
+
+body.dark .theme-basketball .chat-area {
+	background: linear-gradient(180deg, #1c0d00 0%, #431407 100%) !important;
+}
+
+/* =========================================================
+   HOVER BULLE — effet subtil
+   ========================================================= */
+.message-bubble {
+	transition: transform 0.18s ease, box-shadow 0.18s ease !important;
+}
+
+.message-bubble:hover {
+	transform: translateY(-2px) !important;
+}
