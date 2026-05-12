@@ -1,9 +1,15 @@
 FROM tomcat:9.0-jdk17
 
-# Désactiver le port shutdown pour éviter le conflit avec Render
 RUN sed -i 's/<Server port="8005"/<Server port="-1"/' /usr/local/tomcat/conf/server.xml
 
-COPY quickchat.war /usr/local/tomcat/webapps/ROOT.war
+# Supprimer l'app ROOT par défaut
+RUN rm -rf /usr/local/tomcat/webapps/ROOT
+
+# Copier le contenu web (JSP, CSS, etc.)
+COPY src/main/webapp/ /usr/local/tomcat/webapps/ROOT/
+
+# Copier les classes compilées
+COPY build/classes/ /usr/local/tomcat/webapps/ROOT/WEB-INF/classes/
 
 EXPOSE 8080
 
